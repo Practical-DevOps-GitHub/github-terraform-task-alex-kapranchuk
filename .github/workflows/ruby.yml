@@ -50,8 +50,9 @@ jobs:
           PLAN=$(terraform show -json tfplan)
           bash -e .github/tests/test/tests.sh "$PLAN" .github/tests/test/test_cases.txt
       - name: Terraform Apply
-        if: steps.terraform_test.conclusion == 'success'
+        if: success()
         run: terraform apply -auto-approve tfplan
+        
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
